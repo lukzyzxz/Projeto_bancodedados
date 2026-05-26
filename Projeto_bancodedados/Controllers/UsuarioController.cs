@@ -15,7 +15,7 @@ namespace Projeto_bancodedados.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_usuarioRepository.ObterTodosUsuarios());
         }
 
         [HttpGet]
@@ -31,6 +31,20 @@ namespace Projeto_bancodedados.Controllers
                 _usuarioRepository.Cadastrar(usuario);
 
             }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult AtualizarUsuario(int id)
+        {
+            return View(_usuarioRepository.ObterUsuario(id));
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarUsuario(Usuario usuario)
+        {
+            _usuarioRepository.Atualizar(usuario);
+
             return RedirectToAction(nameof(Index));
         }
     }
