@@ -56,7 +56,21 @@ namespace Projeto_bancodedados.Repository
 
         public void Excluir(int id)
         {
-            throw new NotImplementedException();
+            using (var conexao = new MySqlConnection(_conexaoMySQL))
+            {
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand(
+                    "delete from usuario where IdUsu=@IdUsu",
+                    conexao
+                );
+
+                cmd.Parameters.AddWithValue("@IdUsu", id);
+
+                int i = cmd.ExecuteNonQuery();
+
+                conexao.Close();
+            }
         }
 
         public IEnumerable<Usuario> ObterTodosUsuarios()
